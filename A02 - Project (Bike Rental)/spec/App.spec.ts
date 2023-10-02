@@ -78,6 +78,16 @@ describe('App.ts', () => {
         expect(app.returnBike(new_bike.id, new_client.email)).toEqual(2 * new_bike.price_per_hour);
     });
 
+    it('Does an error occur when I try to return a bike of a non-existent rent?', async () => {
+        const new_bike = new Bike("Cannondale", "0M1N3", 5, 17.8, "Apple is versatile!!!", 300);
+        const new_client = new Client("Tai", "Tai@gmail.com", "Omine");
+        const app = new App();
+
+        app.registerClient(new_client);
+        app.registerBike(new_bike);
+        expect(() => { app.returnBike(new_bike.id, new_client.email) }).toThrow(Error.RentNonExist);
+    });
+
     //Rent
     it('Does an error occur when I try to register a rent with a non-existent bike?', async () => {
         const new_bike = new Bike("Cannondale", "0M1N3", 5, 17.8, "Apple is versatile!!!", 300);
